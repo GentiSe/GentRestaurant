@@ -4,7 +4,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder
     .AddDbContext()
-    .AddAutoMapper();
+    .AddAutoMapper()
+    .AddIoC();
 
 // Add services to the container.
 

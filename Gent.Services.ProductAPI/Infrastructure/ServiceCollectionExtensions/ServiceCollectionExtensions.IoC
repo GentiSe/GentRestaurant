@@ -1,6 +1,0 @@
-﻿namespace Gent.Services.ProductAPI.Infrastructure.ServiceCollectionExtensions
-{
-    public class ServiceCollectionExtensions
-    {
-    }
-}
