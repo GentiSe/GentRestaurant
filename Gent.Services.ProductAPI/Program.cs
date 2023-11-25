@@ -3,7 +3,8 @@ using Gent.Services.ProductAPI.Infrastructure.ServiceCollectionExtensions;
 var builder = WebApplication.CreateBuilder(args);
 
 builder
-    .AddDbContext();
+    .AddDbContext()
+    .AddAutoMapper();
 
 // Add services to the container.
 

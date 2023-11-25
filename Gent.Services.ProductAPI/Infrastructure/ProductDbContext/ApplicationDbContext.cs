@@ -1,4 +1,4 @@
-﻿using Gent.Services.ProductAPI.Models;
+﻿using Gent.Services.ProductAPI.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace Gent.Services.ProductAPI.Infrastructure.ProductDbContext

@@ -1,4 +1,4 @@
-﻿using Gent.Services.ProductAPI.Models;
+﻿using Gent.Services.ProductAPI.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -18,6 +18,7 @@ namespace Gent.Services.ProductAPI.Infrastructure.EntityFrameworkConfigurations
             b.Property(x => x.Description).IsRequired();
             b.Property(x => x.CategoryName).IsRequired();
             b.Property(x => x.ImageUrl).IsRequired();
+            b.Property(x => x.IsDeleted).IsRequired();
 
 
             b.HasKey(x => x.Id);
