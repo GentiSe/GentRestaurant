@@ -53,4 +53,3 @@ namespace Gent.Services.ProductAPI.Application.Controllers
         }
     }
 }
-0
