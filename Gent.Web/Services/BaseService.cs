@@ -47,8 +47,9 @@ namespace Gent.Web.Services
                 };
 
                 var apiResponse = await client.SendAsync(message);
-                var content = await apiResponse?.Content?.ReadAsStreamAsync();
-                return await JsonSerializer.DeserializeAsync<T>(content);
+                var content = await apiResponse?.Content?.ReadAsStringAsync();
+                var res = JsonSerializer.Deserialize<T>(content, JsonOptions());
+                return res;
             }
             catch (Exception e)
             {
@@ -64,6 +65,17 @@ namespace Gent.Web.Services
                 var res = JsonSerializer.Serialize(errorResponse);
                 return JsonSerializer.Deserialize<T>(res);                
             }
+        }
+
+        public JsonSerializerOptions JsonOptions()
+        {
+            return new JsonSerializerOptions
+            {
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.Never,
+                PropertyNameCaseInsensitive = true,
+                WriteIndented = true                        // By default this property is set to 'false'
+            };
         }
     }
 }

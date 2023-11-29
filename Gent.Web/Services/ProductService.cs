@@ -18,7 +18,7 @@ namespace Gent.Web.Services
             {
                 ApiType = ApiType.POST,
                 Data = product,
-                ApiUrl = SD.ProductApiBase + "api/products",
+                ApiUrl = SD.ProductAPI + "api/v1/products",
                 AccessToken = "null"
             });
         }
@@ -28,7 +28,7 @@ namespace Gent.Web.Services
             return await this.SendAsync<T>(new ApiRequest()
             {
                 ApiType = ApiType.DELETE,
-                ApiUrl = SD.ProductApiBase + "api/products/" + id,
+                ApiUrl = SD.ProductAPI + "api/v1/products/" + id,
                 AccessToken = "null"
             });
         }
@@ -38,7 +38,7 @@ namespace Gent.Web.Services
             return await this.SendAsync<T>(new ApiRequest()
             {
                 ApiType = ApiType.GET,
-                ApiUrl = SD.ProductApiBase + "api/products",
+                ApiUrl = SD.ProductAPI + "api/v1/products",
                 AccessToken = "null"
             });
         }
@@ -48,7 +48,7 @@ namespace Gent.Web.Services
             return await this.SendAsync<T>(new ApiRequest()
             {
                 ApiType = ApiType.GET,
-                ApiUrl = SD.ProductApiBase + "api/products/" + id,
+                ApiUrl = SD.ProductAPI + "api/v1/products/" + id,
                 AccessToken = "null"
             });
         }
@@ -59,7 +59,7 @@ namespace Gent.Web.Services
             {
                 ApiType = ApiType.PUT,
                 Data = product,
-                ApiUrl = SD.ProductApiBase + "api/products",
+                ApiUrl = SD.ProductAPI + "api/v1/products",
                 AccessToken = "null"
             });
         }

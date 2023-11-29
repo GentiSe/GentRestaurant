@@ -1,4 +1,13 @@
+using Gent.Web.Infrastructure.ServiceCollectionExtensions;
+
 var builder = WebApplication.CreateBuilder(args);
+
+
+builder
+    .AddHttp()
+    .AddIntegrationConfigurations()
+    .AddIoC();
+
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();

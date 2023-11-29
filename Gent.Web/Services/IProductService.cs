@@ -2,7 +2,7 @@
 
 namespace Gent.Web.Services
 {
-    public interface IProductService : IProductService
+    public interface IProductService : IBaseService
     {
         Task<T> GetAllProductsAsync<T>();
         Task<T> CreateProduct<T>(ProductDTO product);
