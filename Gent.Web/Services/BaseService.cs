@@ -1,5 +1,6 @@
 ﻿using Gent.Services.ProductAPI.Application.DTOs;
 using Gent.Web.Application;
+using Gent.Web.Infrastructure.Helpers;
 using System.Text;
 using System.Text.Json;
 
@@ -33,7 +34,8 @@ namespace Gent.Web.Services
 
                 if(request.Data != null)
                 {
-                    message.Content = new StringContent(JsonSerializer.Serialize(request.Data),Encoding.UTF8);
+                    message.Content = new StringContent(JsonSerializer.Serialize(request.Data), Encoding.UTF8,
+                      "application/json");
                 }
 
                 message.Method = (request.ApiType)
@@ -48,7 +50,7 @@ namespace Gent.Web.Services
 
                 var apiResponse = await client.SendAsync(message);
                 var content = await apiResponse?.Content?.ReadAsStringAsync();
-                var res = JsonSerializer.Deserialize<T>(content, JsonOptions());
+                var res = JsonSerializer.Deserialize<T>(content, JsonHelpers.JsonOptions());
                 return res;
             }
             catch (Exception e)
@@ -65,17 +67,6 @@ namespace Gent.Web.Services
                 var res = JsonSerializer.Serialize(errorResponse);
                 return JsonSerializer.Deserialize<T>(res);                
             }
-        }
-
-        public JsonSerializerOptions JsonOptions()
-        {
-            return new JsonSerializerOptions
-            {
-                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-                DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.Never,
-                PropertyNameCaseInsensitive = true,
-                WriteIndented = true                        // By default this property is set to 'false'
-            };
         }
     }
 }

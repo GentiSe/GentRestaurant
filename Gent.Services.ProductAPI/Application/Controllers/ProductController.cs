@@ -23,8 +23,8 @@ namespace Gent.Services.ProductAPI.Application.Controllers
             return Ok(await _repository.GetAll());
         }
 
-        [HttpGet("id")]
-        public async Task<IActionResult> GetProduct(int id)
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetProduct([FromRoute]int id)
         {
             if (id is 0)
                 return BadRequest("Id must be provided");
@@ -32,7 +32,7 @@ namespace Gent.Services.ProductAPI.Application.Controllers
             return Ok(await _repository.Get(id));
         }
 
-        [HttpDelete("id")]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteProduct(int id)
         {
             if (id is 0)

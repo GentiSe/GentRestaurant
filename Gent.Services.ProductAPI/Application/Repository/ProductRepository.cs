@@ -59,7 +59,7 @@ namespace Gent.Services.ProductAPI.Application.Repository
 
         public async Task<BaseResponse> GetAll()
         {
-            var products = await _context.Products.Select(x => new ProductDto
+            var products = await _context.Products.Where(d => !d.IsDeleted).Select(x => new ProductDto
             {
                 Id = x.Id,
                 Name = x.Name,

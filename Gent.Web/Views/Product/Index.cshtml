@@ -1,0 +1,97 @@
+﻿@using Gent.Web.Application.DTOs;
+@model IEnumerable<ProductDTO>
+
+
+<br />
+<br />
+
+<div class="container p-4 border">
+    <div class="row pb-2">
+        <div class="col">
+            <h1 class="text-info"> Products List</h1>
+        </div>
+        <div class="col text-end pt-1">
+            <a asp-action="Create" class="btn btn-outline-info"> <i class="fa-plus"></i>Create New product </a>
+        </div>
+    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Name
+                </th>
+                <th>
+                    Category Name
+                </th>
+                <th>
+                    Price
+                </th>
+                <th>
+
+                </th>
+                <th>
+
+                </th>
+            </tr>
+
+        </thead>
+        <tbody>
+            @if (Model.Count() > 0)
+            {
+                @foreach(var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @item.Name
+                        </td>
+                         <td>
+                            @item.CategoryName
+                        </td>
+                        <td>
+                            @((item.Price).ToString("c"))
+                        </td>
+                        <td>
+                        <a asp-action="Edit" class="btn btn-success" asp-route-Id="@item.Id">
+                            <i class="fas fa-edit"></i>
+                            </a>
+                        </td>
+                        <td>
+                            <button class="btn btn-danger" onclick="deleteProduct(@item.Id)">
+                                <i class="fas fa-delete"></i>
+                            </button>
+                            @* <a asp-action="DeleteProduct" class="btn btn-danger" asp-route-Id="@item.Id">
+                                <i class="fas fa-delete"></i>
+                            </a> *@
+                        </td>
+                        
+                    </tr>
+                }
+
+            }
+        </tbody>
+
+    </table>
+</div>
+<script>
+    function deleteProduct(productId) {
+        // Make an AJAX request to the delete endpoint
+        var xhr = new XMLHttpRequest();
+
+        xhr.open("POST", "/Product/Delete", true);
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4) {
+                if (xhr.status === 200) {
+                    // Handle success, e.g., refresh the product list
+                    location.reload();
+                } else {
+                    console.error("Error deleting product:", xhr.responseText);
+                    // Handle error, e.g., display an error message
+                }
+            }
+        };
+
+        xhr.send("id="+productId);
+    }
+</script>

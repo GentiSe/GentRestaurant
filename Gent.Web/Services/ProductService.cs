@@ -57,7 +57,7 @@ namespace Gent.Web.Services
         {
             return await this.SendAsync<T>(new ApiRequest()
             {
-                ApiType = ApiType.PUT,
+                ApiType = ApiType.POST,
                 Data = product,
                 ApiUrl = SD.ProductAPI + "api/v1/products",
                 AccessToken = "null"
