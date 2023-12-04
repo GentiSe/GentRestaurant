@@ -51,7 +51,7 @@ namespace Gent.Services.ProductAPI.Application.Repository
             return new BaseResponse() { HasSucceded = result };
         }
 
-        public async Task<BaseResponse> Get(int id)
+        public async Task<BaseResponse> Get(int id) 
         {
             var product = await _context.Products.Where(x => x.Id == id).FirstOrDefaultAsync();
             return new BaseResponse() { HasSucceded = true, Result = product };
