@@ -15,7 +15,15 @@ namespace Gent.Services.Identity.Infrastructure.ServiceCollectionExtensions
 
         public static IServiceCollection AddIdentityProvider(this IServiceCollection services)
         {
-            services.AddIdentity<ApplicationUser, IdentityRole>()
+            services.AddIdentity<ApplicationUser, IdentityRole>(opt =>
+            {
+
+                opt.Password.RequireDigit = false;
+                opt.Password.RequireLowercase = false;
+                opt.Password.RequireUppercase = false;
+                opt.Password.RequireNonAlphanumeric = false;
+
+            })
                 .AddEntityFrameworkStores<IdentityContext>().AddDefaultTokenProviders();
 
             var builder = services.AddIdentityServer(options =>

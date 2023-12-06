@@ -1,12 +1,15 @@
 using Gent.Web.Infrastructure.ServiceCollectionExtensions;
+using Microsoft.IdentityModel.Logging;
 
 var builder = WebApplication.CreateBuilder(args);
 
+IdentityModelEventSource.ShowPII = true;
 
 builder
     .AddHttp()
     .AddIntegrationConfigurations()
-    .AddIoC();
+    .AddIoC()
+    .AddAuthentication();
 
 
 // Add services to the container.

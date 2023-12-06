@@ -1,10 +1,12 @@
 using Gent.Services.Identity.Infrastructure.ServiceCollectionExtensions;
+using Gent.Services.Identity.Initializer;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder
     .AddDbContext()
-    .AddIdentity();
+    .AddIdentity()
+    .AddIoC();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -20,6 +22,7 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+//SeedDatabase();
 app.UseStaticFiles();
 
 app.UseRouting();
@@ -31,3 +34,12 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();
+
+void SeedDatabase() //can be placed at the very bottom under app.Run()
+{
+    using (var scope = app.Services.CreateScope())
+    {
+        var dbInitializer = scope.ServiceProvider.GetRequiredService<IDbInitializer>();
+        dbInitializer.Initialize().GetAwaiter().GetResult();
+    }
+}
