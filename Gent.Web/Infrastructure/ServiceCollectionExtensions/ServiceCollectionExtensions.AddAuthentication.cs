@@ -29,7 +29,8 @@
                     opt.ResponseType = "code";
                     opt.TokenValidationParameters.NameClaimType = "name";
                     opt.TokenValidationParameters.RoleClaimType = "role";
-                    opt.Scope.Add("Mango");
+                    opt.Scope.Add("mango");
+                    opt.SaveTokens = true;
 
                 });
 

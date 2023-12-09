@@ -42,7 +42,7 @@ namespace Gent.Services.Identity.MainModule
 
         /// <summary>
         /// Shows the error page
-        /// </summary>
+        /// </summary>0
         public async Task<IActionResult> Error(string errorId)
         {
             var vm = new ErrorViewModel();
@@ -60,7 +60,7 @@ namespace Gent.Services.Identity.MainModule
                 }
             }
 
-            return View("Error", vm);
+            return View("Error/Index", vm);
         }
     }
 }

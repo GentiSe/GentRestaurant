@@ -19,7 +19,7 @@ namespace Gent.Services.Identity
         public static IEnumerable<ApiScope> ApiScopes =>
             new List<ApiScope>
             {
-                new ApiScope("Mango", "Mango Server"),
+                new ApiScope("mango", "Mango Server"),
                 new ApiScope(name:"read", displayName: "read"),
                 new ApiScope(name:"write", displayName: "write"),
                 new ApiScope(name:"delete","delete")
@@ -40,8 +40,9 @@ namespace Gent.Services.Identity
                     ClientId = "mango",
                     ClientSecrets = {new Secret("secret".Sha256())},
                     AllowedGrantTypes = GrantTypes.Code,
-                    RedirectUris = { "http://localhost:44393/signin-oidc" },
-                    PostLogoutRedirectUris = { "http://localhost:44393/signout-callback-oidc" },
+                    RedirectUris = { "https://localhost:44383/signin-oidc" },
+                    PostLogoutRedirectUris = { "http://localhost:44383/signout-callback-oidc" },
+
                     AllowedScopes = new List<string>
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
