@@ -1,16 +1,18 @@
 ﻿using Gent.Services.ProductAPI.Application.DTOs;
 using Gent.Web.Application;
+using Gent.Web.Infrastructure;
 using Gent.Web.Infrastructure.Helpers;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
 
 namespace Gent.Web.Services
 {
-    public class BaseService : IBaseService
+    public class BaseService :BaseRequestHandler, IBaseService
     {
         public BaseResponse _baseResponse { get; set; }
         public IHttpClientFactory _httpClientFactory { get; set; }
-        public BaseService(IHttpClientFactory httpClientFactory)
+        public BaseService(IHttpClientFactory httpClientFactory, ITokenEndpoint tokenEndpoint): base(tokenEndpoint)
         {
            _baseResponse = new BaseResponse();
            _httpClientFactory = httpClientFactory;
@@ -25,6 +27,7 @@ namespace Gent.Web.Services
         {
             try
             {
+                
                 var client = _httpClientFactory.CreateClient("GentApi");
                 HttpRequestMessage message = new HttpRequestMessage();
 
@@ -36,6 +39,13 @@ namespace Gent.Web.Services
                 {
                     message.Content = new StringContent(JsonSerializer.Serialize(request.Data), Encoding.UTF8,
                       "application/json");
+                }
+
+                var token = await GetAccessToken();
+
+                if(!string.IsNullOrEmpty(token))
+                {
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
                 }
 
                 message.Method = (request.ApiType)

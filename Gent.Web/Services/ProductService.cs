@@ -1,5 +1,6 @@
 ﻿using Gent.Web.Application;
 using Gent.Web.Application.DTOs;
+using Gent.Web.Infrastructure;
 using static Gent.Web.SD;
 
 namespace Gent.Web.Services
@@ -7,7 +8,8 @@ namespace Gent.Web.Services
     public class ProductService : BaseService, IProductService
     {
         private readonly IHttpClientFactory _clientFactory;
-        public ProductService(IHttpClientFactory httpClientFactory) : base(httpClientFactory)
+        private readonly ITokenEndpoint _tokenEndpoint;
+        public ProductService(IHttpClientFactory httpClientFactory, ITokenEndpoint tokenEndpoint) : base(httpClientFactory,tokenEndpoint)
         {
             _clientFactory = httpClientFactory;
         }

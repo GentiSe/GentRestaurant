@@ -12,7 +12,10 @@ namespace Gent.Web.Infrastructure.ServiceCollectionExtensions
 
         public static IServiceCollection AddIoC(this  IServiceCollection services)
         {
-            services.AddScoped<IProductService, ProductService>();  
+            services.AddScoped<IProductService, ProductService>();
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddTransient<ITokenEndpoint, TokenEndpoint>();
+
             return services;
         }
     }

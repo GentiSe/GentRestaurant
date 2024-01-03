@@ -1,22 +1,51 @@
-﻿ using Gent.Web.Models;
+﻿using Gent.Services.ProductAPI.Application.DTOs;
+using Gent.Web.Application.DTOs;
+using Gent.Web.Infrastructure.Helpers;
+using Gent.Web.Models;
+using Gent.Web.Services;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using System.Text.Json;
 
 namespace Gent.Web.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly IProductService _productService;
 
-        public HomeController(ILogger<HomeController> logger)
+
+        public HomeController(ILogger<HomeController> logger, IProductService productService)
         {
             _logger = logger;
+            _productService = productService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var products = new List<ProductDTO>();
+            var response = await _productService.GetAllProductsAsync<BaseResponse>();
+            if (response.HasSucceded)
+            {
+                products = JsonSerializer.Deserialize<List<ProductDTO>>(Convert.ToString(response.Result), JsonHelpers.JsonOptions());
+            }
+
+            return View(products);
+        }
+
+        [Authorize]
+        public async Task<IActionResult> Details(int id)
+        {
+            var model = new ProductDTO();
+            var response = await _productService.GetProductAsync<BaseResponse>(id);
+            if(response.HasSucceded)
+            {
+                model = JsonSerializer.Deserialize<ProductDTO>(Convert.ToString(response.Result), JsonHelpers.JsonOptions());
+            }
+
+            return View(model);
         }
 
         public IActionResult Privacy()
@@ -31,8 +60,9 @@ namespace Gent.Web.Controllers
         }
 
         [Authorize]
-        public IActionResult Login()
+        public async Task<IActionResult> Login()
         {
+            var token = await HttpContext.GetTokenAsync("access_token");
             return RedirectToAction(nameof(Index));
         }
         public IActionResult Logout()
